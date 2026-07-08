@@ -1,0 +1,13 @@
+
+	Welch Two Sample t-test
+
+data:  G3 by sex
+t = -2.0651, df = 390.57, p-value =
+0.03958
+alternative hypothesis: true difference in means between group F and group M is not equal to 0
+95 percent confidence interval:
+ -1.85073226 -0.04545244
+sample estimates:
+mean in group F mean in group M 
+       9.966346       10.914439 
+

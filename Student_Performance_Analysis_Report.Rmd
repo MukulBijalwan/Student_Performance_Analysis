@@ -1,0 +1,214 @@
+---
+title: "Student Performance Analysis Using R"
+author: "Mukul Bijalwan"
+date: "2026-07-08"
+output: html_document
+  html_document:
+    toc: true
+    theme: cosmo
+---
+
+# Introduction
+
+## Objective
+
+The purpose of this report is to analyze the factors affecting students' academic performance using the UCI Student Performance dataset. The analysis focuses on demographic, social, and educational characteristics that influence the students' final grades.
+
+---
+
+# Load Required Libraries
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(corrplot)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(car)
+library(psych)
+```
+
+---
+
+# Load Dataset
+
+```{r}
+student <- read.csv2("student_performance.csv", sep=";")
+head(student)
+```
+
+---
+
+# Dataset Overview
+
+```{r}
+dim(student)
+str(student)
+summary(student)
+```
+
+The dataset contains information about students' demographic background, family characteristics, study habits, lifestyle, and academic performance.
+
+---
+
+# Missing Values
+
+```{r}
+colSums(is.na(student))
+```
+
+No missing values are present in the dataset.
+
+---
+
+# Descriptive Statistics
+
+```{r}
+student %>%
+summarise(
+Average_Age = mean(age),
+Average_Absences = mean(absences),
+Average_G1 = mean(G1),
+Average_G2 = mean(G2),
+Average_G3 = mean(G3)
+)
+```
+
+---
+
+# Distribution of Final Grades
+
+```{r}
+ggplot(student, aes(G3))+
+geom_histogram(bins=15,
+fill="steelblue",
+color="white")+
+labs(title="Distribution of Final Grade (G3)",
+x="Final Grade",
+y="Count")
+```
+
+---
+
+# Gender-wise Performance
+
+```{r}
+ggplot(student,
+aes(sex,G3,fill=sex))+
+geom_boxplot()+
+labs(title="Final Grade by Gender",
+x="Gender",
+y="Final Grade")
+```
+
+---
+
+# Study Time vs Final Grade
+
+```{r}
+ggplot(student,
+aes(as.factor(studytime),G3,
+fill=as.factor(studytime)))+
+geom_boxplot()+
+labs(title="Study Time and Final Grade",
+x="Weekly Study Time",
+y="Final Grade")
+```
+
+---
+
+# Failures vs Final Grade
+
+```{r}
+ggplot(student,
+aes(as.factor(failures),G3,
+fill=as.factor(failures)))+
+geom_boxplot()+
+labs(title="Past Failures and Final Grade")
+```
+
+---
+
+# Absences vs Final Grade
+
+```{r}
+ggplot(student,
+aes(absences,G3))+
+geom_point(alpha=0.6)+
+geom_smooth(method="lm")+
+labs(title="Absences vs Final Grade")
+```
+
+---
+
+# Correlation Analysis
+
+```{r}
+numeric_data <- student %>%
+select(age,studytime,failures,absences,G1,G2,G3)
+
+cor_matrix <- cor(numeric_data)
+
+corrplot(cor_matrix,
+method="color",
+type="upper",
+addCoef.col="black")
+```
+
+---
+
+# Linear Regression Model
+
+Predicting the final grade (G3).
+
+```{r}
+model <- lm(G3 ~ G1 + G2 + studytime + failures + absences,
+data=student)
+
+summary(model)
+```
+
+---
+
+# Model Diagnostics
+
+```{r}
+par(mfrow=c(2,2))
+plot(model)
+```
+
+---
+
+# Important Findings
+
+```{r}
+importance <- summary(model)
+importance
+```
+
+Interpretation:
+
+- G1 and G2 are strong predictors of final grade.
+- Previous failures negatively affect academic performance.
+- Increased study time generally improves grades.
+- Excessive absences tend to reduce final grades.
+
+---
+
+# Conclusion
+
+The analysis suggests that:
+
+- Previous academic performance (G1 and G2) has the strongest influence on the final grade (G3).
+- Students with fewer failures generally achieve better academic outcomes.
+- Regular study habits contribute positively to performance.
+- Higher absenteeism is associated with lower final grades.
+- These findings can help educators identify at-risk students and develop targeted interventions.
+
+---
+
+# Session Information
+
+```{r}
+sessionInfo()
+```

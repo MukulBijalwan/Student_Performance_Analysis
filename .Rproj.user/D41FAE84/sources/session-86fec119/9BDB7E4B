@@ -1,0 +1,27 @@
+{
+    "id": "9BDB7E4B",
+    "path": "D:/Student-Perfomance_Analysis/scripts/05_hypothesis_testing.R",
+    "project_path": "scripts/05_hypothesis_testing.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1783426666227.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "27,23",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1783427608,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1783427608447,
+    "read_only": false,
+    "read_only_alternatives": []
+}

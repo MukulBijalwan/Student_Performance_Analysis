@@ -1,0 +1,3 @@
+             Df Sum Sq Mean Sq F value Pr(>F)
+studytime     3    108   36.07   1.728  0.161
+Residuals   391   8162   20.87               
